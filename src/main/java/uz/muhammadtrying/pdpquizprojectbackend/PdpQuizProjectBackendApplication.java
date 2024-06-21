@@ -1,0 +1,13 @@
+package uz.muhammadtrying.pdpquizprojectbackend;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class PdpQuizProjectBackendApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(PdpQuizProjectBackendApplication.class, args);
+    }
+
+}
