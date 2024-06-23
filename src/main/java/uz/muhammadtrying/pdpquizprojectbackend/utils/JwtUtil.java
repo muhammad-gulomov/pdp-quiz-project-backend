@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.LogInDTO;
 
@@ -12,13 +13,12 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    public String generateAccessToken(LogInDTO logInDTO) {
-        // generating an access token which expires 10 seconds after being created
+    public String generateAccessToken(UserDetails userDetails) {
         return Jwts.builder()
-                .subject(logInDTO.getEmail())
+                .subject(userDetails.getUsername())
                 .issuer("Muhammad's Production")
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 10))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 1000))
                 .signWith(secretKey())
                 .compact();
     }

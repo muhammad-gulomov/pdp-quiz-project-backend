@@ -30,7 +30,12 @@ public class SecurityConfig {
 
         // securing apis
         httpSecurity.authorizeHttpRequests(m -> {
-            m.requestMatchers("/api/auth/**").permitAll();
+            m.requestMatchers(
+                    "/api/auth/**",
+                    "/authenticate", "/register",
+                    "/v3/api-docs/**",
+                    "/swagger-ui/**",
+                    "/swagger-ui.html").permitAll();
             m.anyRequest().authenticated();
         });
 

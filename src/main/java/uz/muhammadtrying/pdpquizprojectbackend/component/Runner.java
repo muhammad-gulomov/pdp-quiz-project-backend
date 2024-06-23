@@ -18,7 +18,7 @@ public class Runner implements CommandLineRunner {
         User user = User.builder()
                 .firstName("Muhammad")
                 .lastName("G'ulomov")
-                .email("1")
+                .email("muhammadtrying@gmail.com")
                 .password(passwordEncoder.encode("1"))
                 .build();
         userRepository.save(user);
