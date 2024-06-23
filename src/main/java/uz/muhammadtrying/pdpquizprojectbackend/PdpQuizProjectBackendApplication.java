@@ -8,6 +8,6 @@ public class PdpQuizProjectBackendApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PdpQuizProjectBackendApplication.class, args);
-    }
 
+    }
 }
