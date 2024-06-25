@@ -36,17 +36,17 @@ public class AuthController {
         return new TokenDTO("Bearer " + jwtUtil.generateAccessToken(userDetails), "Bearer " + jwtUtil.generateRefreshToken(logInDTO));
     }
 
-    @PostMapping("/signup")
-    public String getInfoAndSendCode(@RequestBody UserDTO userDTO) {
-        String code = userService.sendEmail(userDTO.getEmail());
-        userService.addDataToSession(httpSession,userDTO,code);
-        return code;
-    }
-
     @PostMapping("/refresh")
     public String accessTokenGeneratorUsingRefreshToken() {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
         return "Bearer " + jwtUtil.generateAccessToken(userDetails);
+    }
+
+    @PostMapping("/signup")
+    public void getInfoAndSendCode(@RequestBody UserDTO userDTO) {
+        String code = userService.codeGenerator();
+        userService.sendEmail(userDTO.getEmail(), code);
+        userService.addDataToSession(httpSession, userDTO, code);
     }
 }
