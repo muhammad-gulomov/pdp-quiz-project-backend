@@ -3,6 +3,7 @@ package uz.muhammadtrying.pdpquizprojectbackend.service;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.UserDTO;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.User;
 
 @Service
 public interface UserService {
@@ -12,4 +13,8 @@ public interface UserService {
     void addDataToSession(HttpSession httpSession, UserDTO userDTO, String code);
 
     String codeGenerator();
+
+    User getDataFromSession(HttpSession httpSession);
+
+    void save(User user);
 }
