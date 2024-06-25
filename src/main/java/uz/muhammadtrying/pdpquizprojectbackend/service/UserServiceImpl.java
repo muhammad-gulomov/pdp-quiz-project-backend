@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.UserDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.User;
+import uz.muhammadtrying.pdpquizprojectbackend.interfaces.UserService;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.UserRepository;
 
 import java.security.SecureRandom;

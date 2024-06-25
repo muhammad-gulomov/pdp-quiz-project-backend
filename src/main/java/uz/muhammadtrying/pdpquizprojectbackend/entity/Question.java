@@ -5,10 +5,12 @@ import lombok.*;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @ToString
 @Getter
 @Setter

@@ -1,4 +1,4 @@
-package uz.muhammadtrying.pdpquizprojectbackend.service;
+package uz.muhammadtrying.pdpquizprojectbackend.interfaces;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;

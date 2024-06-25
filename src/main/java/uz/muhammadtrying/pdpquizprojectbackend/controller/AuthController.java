@@ -15,7 +15,7 @@ import uz.muhammadtrying.pdpquizprojectbackend.dto.TokenDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.UserDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.User;
 import uz.muhammadtrying.pdpquizprojectbackend.security.CustomUserDetailsService;
-import uz.muhammadtrying.pdpquizprojectbackend.service.UserService;
+import uz.muhammadtrying.pdpquizprojectbackend.interfaces.UserService;
 import uz.muhammadtrying.pdpquizprojectbackend.utils.JwtUtil;
 
 @RestController
