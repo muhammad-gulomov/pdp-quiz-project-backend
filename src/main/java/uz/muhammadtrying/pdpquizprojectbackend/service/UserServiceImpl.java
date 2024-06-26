@@ -1,6 +1,5 @@
 package uz.muhammadtrying.pdpquizprojectbackend.service;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -51,16 +50,6 @@ public class UserServiceImpl implements UserService {
             code.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
         }
         return code.toString();
-    }
-
-    @Override
-    public User getDataFromSession(HttpSession httpSession) {
-        String firstName = String.valueOf(httpSession.getAttribute("firstName"));
-        String lastName = String.valueOf(httpSession.getAttribute("lastName"));
-        String password = String.valueOf(httpSession.getAttribute("password"));
-        String email = String.valueOf(httpSession.getAttribute("email"));
-
-        return User.builder().firstName(firstName).lastName(lastName).password(password).email(email).build();
     }
 
     @Override

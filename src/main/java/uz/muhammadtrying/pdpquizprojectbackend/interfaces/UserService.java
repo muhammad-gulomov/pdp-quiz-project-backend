@@ -1,6 +1,5 @@
 package uz.muhammadtrying.pdpquizprojectbackend.interfaces;
 
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.UserDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.TempUser;
@@ -13,7 +12,6 @@ public interface UserService {
 
     String codeGenerator();
 
-    User getDataFromSession(HttpSession httpSession);
 
     void save(TempUser user);
 
