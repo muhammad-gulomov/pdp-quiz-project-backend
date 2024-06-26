@@ -7,8 +7,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.UserDTO;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.TempUser;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.User;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.UserService;
+import uz.muhammadtrying.pdpquizprojectbackend.repo.TempUserRepository;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.UserRepository;
 
 import java.security.SecureRandom;
@@ -19,6 +21,7 @@ import java.util.Random;
 public class UserServiceImpl implements UserService {
     private final JavaMailSender javaMailSender;
     private final UserRepository userRepository;
+    private final TempUserRepository tempUserRepository;
 
 
     @Override
@@ -35,15 +38,6 @@ public class UserServiceImpl implements UserService {
         message.setSubject("Authentication");
         message.setText("Your code is " + code);
         javaMailSender.send(message);
-    }
-
-    @Override
-    public void addDataToSession(HttpSession httpSession, UserDTO userDTO, String code) {
-        httpSession.setAttribute("code", code);
-        httpSession.setAttribute("firstName", userDTO.getFirstName());
-        httpSession.setAttribute("lastName", userDTO.getLastName());
-        httpSession.setAttribute("password", userDTO.getPassword());
-        httpSession.setAttribute("email", userDTO.getEmail());
     }
 
     @Override
@@ -70,7 +64,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(User user) {
+    public void save(TempUser tempUser) {
+        User user = User.builder()
+                .firstName(tempUser.getFirstName())
+                .lastName(tempUser.getLastName())
+                .email(tempUser.getEmail())
+                .password(tempUser.getPassword())
+                .build();
         userRepository.save(user);
+    }
+
+    @Override
+    public void addDataToTempDB(UserDTO userDTO, String code) {
+        TempUser tempUser = TempUser.builder()
+                .firstName(userDTO.getFirstName())
+                .lastName(userDTO.getLastName())
+                .email(userDTO.getEmail())
+                .password(userDTO.getPassword())
+                .code(code)
+                .build();
+        tempUserRepository.save(tempUser);
+    }
+
+    @Override
+    public TempUser getDataFromTempDB(String email) {
+        return tempUserRepository.findByEmail(email);
     }
 }
