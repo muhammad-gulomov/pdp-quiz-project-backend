@@ -8,6 +8,7 @@ import uz.muhammadtrying.pdpquizprojectbackend.repo.CategoryRepository;
 
 @Service
 @RequiredArgsConstructor
+@Service
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;

@@ -8,6 +8,7 @@ import uz.muhammadtrying.pdpquizprojectbackend.repo.ModuleRepository;
 
 @Service
 @RequiredArgsConstructor
+@Service
 public class ModuleServiceImpl implements ModuleService {
 
     private final ModuleRepository moduleRepository;

@@ -13,17 +13,17 @@ import uz.muhammadtrying.pdpquizprojectbackend.entity.enums.DifficultyEnum;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.CategoryService;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.ModuleService;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.QuestionListService;
-import uz.muhammadtrying.pdpquizprojectbackend.interfaces.UserService;
+import uz.muhammadtrying.pdpquizprojectbackend.repo.UserRepository;
 
 @Component
 @RequiredArgsConstructor
 public class Runner implements CommandLineRunner {
 
     private final PasswordEncoder passwordEncoder;
-    private final UserService userService;
-    private final CategoryService categoryService;
     private final ModuleService moduleService;
     private final QuestionListService questionListService;
+    private final UserRepository userRepository;
+    private final CategoryService categoryService;
 
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String ddlAuto;
@@ -76,6 +76,6 @@ public class Runner implements CommandLineRunner {
                 .email("muhammadtrying@gmail.com")
                 .password(passwordEncoder.encode("1"))
                 .build();
-        userService.save(user);
+        userRepository.save(user);
     }
 }

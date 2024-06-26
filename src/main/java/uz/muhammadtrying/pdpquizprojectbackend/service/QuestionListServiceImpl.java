@@ -8,6 +8,7 @@ import uz.muhammadtrying.pdpquizprojectbackend.repo.QuestionListRepository;
 
 @Service
 @RequiredArgsConstructor
+@Service
 public class QuestionListServiceImpl implements QuestionListService {
 
     private final QuestionListRepository questionListRepository;
