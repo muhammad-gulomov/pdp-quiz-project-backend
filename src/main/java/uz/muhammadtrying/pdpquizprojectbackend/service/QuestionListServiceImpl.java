@@ -6,7 +6,7 @@ import uz.muhammadtrying.pdpquizprojectbackend.entity.QuestionList;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.QuestionListService;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.QuestionListRepository;
 
-@Service
+
 @RequiredArgsConstructor
 @Service
 public class QuestionListServiceImpl implements QuestionListService {

@@ -6,7 +6,6 @@ import uz.muhammadtrying.pdpquizprojectbackend.entity.Category;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.CategoryService;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.CategoryRepository;
 
-@Service
 @RequiredArgsConstructor
 @Service
 public class CategoryServiceImpl implements CategoryService {
