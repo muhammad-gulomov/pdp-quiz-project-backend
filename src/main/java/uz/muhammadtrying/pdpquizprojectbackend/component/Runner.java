@@ -58,15 +58,25 @@ public class Runner implements CommandLineRunner {
 
         QuestionList questionList1 = QuestionList.builder().module(module2).difficulty(DifficultyEnum.MEDIUM).name("OOP").build();
         QuestionList questionList2 = QuestionList.builder().module(module2).difficulty(DifficultyEnum.HARD).name("Data Structure").build();
-        QuestionList questionList3 = QuestionList.builder().module(module3).difficulty(DifficultyEnum.MEDIUM).name("History of Python").build();
-        QuestionList questionList4 = QuestionList.builder().module(module4).difficulty(DifficultyEnum.MEDIUM).name("Data Types").build();
-        QuestionList questionList5 = QuestionList.builder().module(module1).difficulty(DifficultyEnum.MEDIUM).name("History of Java").build();
+        QuestionList questionList3 = QuestionList.builder().module(module1).difficulty(DifficultyEnum.EASY).name("Java Basics").build();
+        QuestionList questionList4 = QuestionList.builder().module(module3).difficulty(DifficultyEnum.EASY).name("Python Basics").build();
+        QuestionList questionList5 = QuestionList.builder().module(module4).difficulty(DifficultyEnum.MEDIUM).name("OOP").build();
+        QuestionList questionList6 = QuestionList.builder().module(module4).difficulty(DifficultyEnum.HARD).name("Threading").build();
+
 
         questionListService.save(questionList1);
         questionListService.save(questionList2);
         questionListService.save(questionList3);
         questionListService.save(questionList4);
         questionListService.save(questionList5);
+        questionListService.save(questionList6);
+
+        Question question1 = Question.builder().questionContent("Constructors are used to:").questionList(questionList1).build();
+
+        Option option1_1 = Option.builder().question(question1).isCorrect(true).optionContent("Initialize a newly created object.").build();
+        Option option1_2 = Option.builder().question(question1).isCorrect(true).optionContent("To build a user interface.").build();
+        Option option1_3 = Option.builder().question(question1).isCorrect(true).optionContent("To create a sub-class.").build();
+
 
 
 
