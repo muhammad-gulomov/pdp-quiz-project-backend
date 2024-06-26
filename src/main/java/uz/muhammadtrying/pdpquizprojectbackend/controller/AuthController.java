@@ -1,6 +1,5 @@
 package uz.muhammadtrying.pdpquizprojectbackend.controller;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,13 +8,17 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import uz.muhammadtrying.pdpquizprojectbackend.dto.CodeDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.LogInDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.TokenDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.UserDTO;
-import uz.muhammadtrying.pdpquizprojectbackend.entity.User;
-import uz.muhammadtrying.pdpquizprojectbackend.security.CustomUserDetailsService;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.TempUser;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.UserService;
+import uz.muhammadtrying.pdpquizprojectbackend.security.CustomUserDetailsService;
 import uz.muhammadtrying.pdpquizprojectbackend.utils.JwtUtil;
 
 @RestController
@@ -26,7 +29,6 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final CustomUserDetailsService customUserDetailsService;
     private final UserService userService;
-    private final HttpSession httpSession;
 
     @PostMapping("/login")
     public TokenDTO login(@RequestBody LogInDTO logInDTO) {
@@ -47,16 +49,17 @@ public class AuthController {
     public void getInfoAndSendCode(@RequestBody UserDTO userDTO) {
         String code = userService.codeGenerator();
         userService.sendEmail(userDTO.getEmail(), code);
-        userService.addDataToSession(httpSession, userDTO, code);
+        userService.addDataToTempDB(userDTO, code);
     }
 
     @PostMapping("/verify")
-    public ResponseEntity<String> getCodeAndVerify(@RequestParam String code) {
-        String verificationCode = String.valueOf(httpSession.getAttribute("code"));
+    public ResponseEntity<String> getCodeAndVerify(@RequestBody CodeDTO codeDTO) {
+        String email = codeDTO.getEmail();
+        String code = codeDTO.getCode();
+        TempUser tempUser = userService.getDataFromTempDB(email);
 
-        if (verificationCode.equals(code)) {
-            User authenticatedUser = userService.getDataFromSession(httpSession);
-            userService.save(authenticatedUser);
+        if (code.equals(tempUser.getCode())) {
+            userService.save(tempUser);
             return ResponseEntity.ok("Verification successful");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid verification code");

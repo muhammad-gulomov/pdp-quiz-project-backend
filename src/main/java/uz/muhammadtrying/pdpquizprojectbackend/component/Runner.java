@@ -1,15 +1,19 @@
 package uz.muhammadtrying.pdpquizprojectbackend.component;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import uz.muhammadtrying.pdpquizprojectbackend.entity.*;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.Category;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Module;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.QuestionList;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.User;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.enums.DifficultyEnum;
-import uz.muhammadtrying.pdpquizprojectbackend.interfaces.*;
-import uz.muhammadtrying.pdpquizprojectbackend.repo.CategoryRepository;
-import org.springframework.beans.factory.annotation.Value;
+import uz.muhammadtrying.pdpquizprojectbackend.interfaces.CategoryService;
+import uz.muhammadtrying.pdpquizprojectbackend.interfaces.ModuleService;
+import uz.muhammadtrying.pdpquizprojectbackend.interfaces.QuestionListService;
+import uz.muhammadtrying.pdpquizprojectbackend.interfaces.UserService;
 
 @Component
 @RequiredArgsConstructor
@@ -18,11 +22,7 @@ public class Runner implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final CategoryService categoryService;
-    private final AnswerService answerService;
-    private final AttemptService attemptService;
     private final ModuleService moduleService;
-    private final OptionService optionService;
-    private final QuestionService questionService;
     private final QuestionListService questionListService;
 
     @Value("${spring.jpa.hibernate.ddl-auto}")
@@ -34,7 +34,6 @@ public class Runner implements CommandLineRunner {
         if (ddlAuto.equals("create")) {
             generateData();
         }
-
     }
 
     private void generateData() {
@@ -46,10 +45,10 @@ public class Runner implements CommandLineRunner {
         categoryService.save(category1);
         categoryService.save(category2);
 
-        Module module1 = Module.builder().category(category1).name("module-1").build();
-        Module module2 = Module.builder().category(category1).name("module-2").build();
-        Module module3 = Module.builder().category(category2).name("module-1").build();
-        Module module4 = Module.builder().category(category2).name("module-2").build();
+        Module module1 = Module.builder().category(category1).name("Module-1").build();
+        Module module2 = Module.builder().category(category1).name("Module-2").build();
+        Module module3 = Module.builder().category(category2).name("Module-1").build();
+        Module module4 = Module.builder().category(category2).name("Module-2").build();
 
         moduleService.save(module1);
         moduleService.save(module2);
@@ -67,11 +66,7 @@ public class Runner implements CommandLineRunner {
         questionListService.save(questionList3);
         questionListService.save(questionList4);
         questionListService.save(questionList5);
-
-
-
     }
-
 
 
     private void generateUser() {
@@ -83,5 +78,4 @@ public class Runner implements CommandLineRunner {
                 .build();
         userService.save(user);
     }
-
 }
