@@ -39,10 +39,10 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public String accessTokenGeneratorUsingRefreshToken() {
+    public ResponseEntity<String> accessTokenGeneratorUsingRefreshToken() {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
-        return "Bearer " + jwtUtil.generateAccessToken(userDetails);
+        return ResponseEntity.status(HttpStatus.OK).body("Bearer " + jwtUtil.generateAccessToken(userDetails));
     }
 
     @PostMapping("/signup")
