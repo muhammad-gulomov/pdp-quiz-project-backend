@@ -23,7 +23,7 @@ public class Question {
 
     private String questionContent;
 
-    private Timestamp seconds;
+    private Integer seconds;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL) // orphanRemoval = true
     private List<Option> options;
