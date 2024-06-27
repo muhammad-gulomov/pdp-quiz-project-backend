@@ -1,0 +1,28 @@
+services:
+  app:
+    image: myapp666:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/pdp-quiz-project
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root123
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: pdp-quiz-project
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root123
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

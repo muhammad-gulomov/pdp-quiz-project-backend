@@ -31,18 +31,18 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public TokenDTO login(@RequestBody LogInDTO logInDTO) {
+    public ResponseEntity<TokenDTO> login(@RequestBody LogInDTO logInDTO) {
         var usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(logInDTO.getEmail(), logInDTO.getPassword());
         Authentication authenticate = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         UserDetails userDetails = (UserDetails) authenticate.getPrincipal();
-        return new TokenDTO("Bearer " + jwtUtil.generateAccessToken(userDetails), "Bearer " + jwtUtil.generateRefreshToken(logInDTO));
+        return ResponseEntity.status(HttpStatus.OK).body(new TokenDTO("Bearer " + jwtUtil.generateAccessToken(userDetails), "Bearer " + jwtUtil.generateRefreshToken(logInDTO)));
     }
 
     @PostMapping("/refresh")
-    public String accessTokenGeneratorUsingRefreshToken() {
+    public ResponseEntity<String> accessTokenGeneratorUsingRefreshToken() {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
-        return "Bearer " + jwtUtil.generateAccessToken(userDetails);
+        return ResponseEntity.status(HttpStatus.OK).body("Bearer " + jwtUtil.generateAccessToken(userDetails));
     }
 
     @PostMapping("/signup")

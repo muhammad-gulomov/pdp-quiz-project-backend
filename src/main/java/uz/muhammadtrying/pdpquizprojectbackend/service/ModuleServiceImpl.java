@@ -3,8 +3,12 @@ package uz.muhammadtrying.pdpquizprojectbackend.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Module;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.enums.DifficultyEnum;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.ModuleService;
+import uz.muhammadtrying.pdpquizprojectbackend.projections.ModuleProjection;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.ModuleRepository;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -15,5 +19,10 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public void save(Module module) {
         moduleRepository.save(module);
+    }
+
+    @Override
+    public List<ModuleProjection> findAllByCategoryId(Integer chosenCategoryId, String difficulty) {
+        return moduleRepository.findAllByCategoryAndDifficulty(chosenCategoryId, difficulty);
     }
 }

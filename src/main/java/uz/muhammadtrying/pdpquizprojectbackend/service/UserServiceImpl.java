@@ -1,9 +1,11 @@
 package uz.muhammadtrying.pdpquizprojectbackend.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.UserDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.TempUser;
@@ -21,6 +23,9 @@ public class UserServiceImpl implements UserService {
     private final JavaMailSender javaMailSender;
     private final UserRepository userRepository;
     private final TempUserRepository tempUserRepository;
+    private final PasswordEncoder passwordEncoder;
+    @Value("${spring.mail.username}")
+    private String from;
 
 
     @Override
@@ -32,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
     public void sendMail(String email, String code) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("muhammadtrying@gmail.com");
+        message.setFrom(from);
         message.setTo(email);
         message.setSubject("Authentication");
         message.setText("Your code is " + code);
@@ -41,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String codeGenerator() {
-        String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String CHARACTERS = "0123456789";
         int CODE_LENGTH = 4;
         Random random = new SecureRandom();
         StringBuilder code = new StringBuilder(CODE_LENGTH);
@@ -58,7 +63,7 @@ public class UserServiceImpl implements UserService {
                 .firstName(tempUser.getFirstName())
                 .lastName(tempUser.getLastName())
                 .email(tempUser.getEmail())
-                .password(tempUser.getPassword())
+                .password(passwordEncoder.encode(tempUser.getPassword()))
                 .build();
         userRepository.save(user);
     }
