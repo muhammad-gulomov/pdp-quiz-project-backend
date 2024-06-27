@@ -31,11 +31,11 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public TokenDTO login(@RequestBody LogInDTO logInDTO) {
+    public ResponseEntity<TokenDTO> login(@RequestBody LogInDTO logInDTO) {
         var usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(logInDTO.getEmail(), logInDTO.getPassword());
         Authentication authenticate = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         UserDetails userDetails = (UserDetails) authenticate.getPrincipal();
-        return new TokenDTO("Bearer " + jwtUtil.generateAccessToken(userDetails), "Bearer " + jwtUtil.generateRefreshToken(logInDTO));
+        return ResponseEntity.status(HttpStatus.OK).body(new TokenDTO("Bearer " + jwtUtil.generateAccessToken(userDetails), "Bearer " + jwtUtil.generateRefreshToken(logInDTO)));
     }
 
     @PostMapping("/refresh")

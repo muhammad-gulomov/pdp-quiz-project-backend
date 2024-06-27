@@ -18,19 +18,11 @@ public class QuestionList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
-
     private String name;
-
     @ManyToOne
     private Module module;
-
     @Enumerated(EnumType.STRING)
     private DifficultyEnum difficulty;
-
-
     @OneToMany(mappedBy = "questionList", cascade = CascadeType.ALL) // orphanRemoval = true
     private List<Question> questions;
-
-
-
 }

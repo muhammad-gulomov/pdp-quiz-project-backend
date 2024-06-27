@@ -5,15 +5,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import uz.muhammadtrying.pdpquizprojectbackend.entity.Category;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Module;
-import uz.muhammadtrying.pdpquizprojectbackend.entity.QuestionList;
-import uz.muhammadtrying.pdpquizprojectbackend.entity.User;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.*;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.enums.DifficultyEnum;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.CategoryService;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.ModuleService;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.QuestionListService;
+import uz.muhammadtrying.pdpquizprojectbackend.repo.QuestionRepository;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.UserRepository;
+
+import java.sql.Timestamp;
 
 @Component
 @RequiredArgsConstructor
@@ -24,13 +25,14 @@ public class Runner implements CommandLineRunner {
     private final QuestionListService questionListService;
     private final UserRepository userRepository;
     private final CategoryService categoryService;
+    private final QuestionRepository questionRepository;
 
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String ddlAuto;
 
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         if (ddlAuto.equals("create")) {
             generateData();
         }
@@ -66,6 +68,28 @@ public class Runner implements CommandLineRunner {
         questionListService.save(questionList3);
         questionListService.save(questionList4);
         questionListService.save(questionList5);
+
+        Question question1 = Question.builder().questionContent("asas").seconds(new Timestamp(12)).questionList(questionList1).build();
+        Question question2 = Question.builder().questionContent("adad").seconds(new Timestamp(12)).questionList(questionList2).build();
+        Question question3 = Question.builder().questionContent("asas").seconds(new Timestamp(12)).questionList(questionList3).build();
+        Question question4 = Question.builder().questionContent("adassaad").seconds(new Timestamp(12)).questionList(questionList4).build();
+        Question question5 = Question.builder().questionContent("adassaad").seconds(new Timestamp(12)).questionList(questionList5).build();
+
+        Question question6 = Question.builder().questionContent("asas").seconds(new Timestamp(12)).questionList(questionList1).build();
+        Question question7 = Question.builder().questionContent("adad").seconds(new Timestamp(12)).questionList(questionList2).build();
+        Question question8 = Question.builder().questionContent("asas").seconds(new Timestamp(12)).questionList(questionList3).build();
+        Question question9 = Question.builder().questionContent("adassaad").seconds(new Timestamp(12)).questionList(questionList4).build();
+        Question question10 = Question.builder().questionContent("adassaad").seconds(new Timestamp(12)).questionList(questionList5).build();
+
+        questionRepository.save(question1);
+        questionRepository.save(question1);
+        questionRepository.save(question1);
+        questionRepository.save(question1);
+        questionRepository.save(question1);
+        questionRepository.save(question1);
+        questionRepository.save(question1);
+        questionRepository.save(question1);
+        questionRepository.save(question1);
     }
 
 
