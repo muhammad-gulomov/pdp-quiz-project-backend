@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ModuleRepository extends JpaRepository<Module, Integer> {
     @Query(value = """
-                select m.id, m.name, array_agg(ql) as questionlists, array_agg(q) as questions
+                select m.id as id, m.name as name, array_agg(ql) as questionlists, array_agg(q) as questions
                     from module m
                         join question_list ql on m.id = ql.module_id
                         join question q on ql.id = q.question_list_id

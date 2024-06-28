@@ -22,6 +22,6 @@ public class ModuleController {
             @RequestParam String difficulty,
             @RequestParam Integer chosenCategoryId
     ) {
-        return ResponseEntity.status(100).body(moduleService.findAllByCategoryId(chosenCategoryId, difficulty));
+        return ResponseEntity.ok( moduleService.findAllByCategoryId(chosenCategoryId, difficulty));
     }
 }
