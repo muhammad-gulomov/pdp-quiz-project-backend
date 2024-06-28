@@ -11,14 +11,14 @@ import java.util.List;
 public interface ModuleRepository extends JpaRepository<Module, Integer> {
     @Query(nativeQuery = true, value = """
                select m.id, m.name,
-                   array_agg(ql) as ql_id_list,
+                   array_agg(ql) as questionlists,
                    array_agg(q) as questions
             from module m
             join question_list ql
             on m.id = ql.module_id
             join question q
-            on ql.id = q.question_list_id and ql.difficulty = :difficulty
-            where m.id = :chosenCategoryId
+            on ql.id = q.question_list_id
+            where m.id = :chosenCategoryId and ql.difficulty = :difficulty
             group by m.id
             """)
     List<ModuleProjection> findAllByCategoryAndDifficulty(
