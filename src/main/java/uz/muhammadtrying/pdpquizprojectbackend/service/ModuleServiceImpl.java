@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Module;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Question;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.QuestionList;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.enums.DifficultyEnum;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.ModuleService;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.ModuleRepository;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.QuestionListRepository;
@@ -33,7 +34,7 @@ public class ModuleServiceImpl implements ModuleService {
         Map<String, Object> result = new HashMap<>();
 
         List<Module> modules = moduleRepository.fetchAllByCategoryId(categoryId);
-        List<QuestionList> questionLists = fetchQuestionLists(modules);
+        List<QuestionList> questionLists = fetchQuestionLists(modules,difficulty);
         List<Question> questions = fetchQuestions(questionLists);
 
         result.put("questions", questions);
@@ -48,8 +49,9 @@ public class ModuleServiceImpl implements ModuleService {
         return questionRepository.findAllByQuestionListId(questionListIds);
     }
 
-    private List<QuestionList> fetchQuestionLists(List<Module> modules) {
+    private List<QuestionList> fetchQuestionLists(List<Module> modules, String difficulty) {
         int[] moduleIds = modules.stream().mapToInt(Module::getId).toArray();
-        return questionListRepository.fetchAllByModuleIds(moduleIds);
+        DifficultyEnum difficultyEnum = DifficultyEnum.valueOf(difficulty);
+        return questionListRepository.fetchAllByModuleIds(moduleIds,difficultyEnum);
     }
 }
