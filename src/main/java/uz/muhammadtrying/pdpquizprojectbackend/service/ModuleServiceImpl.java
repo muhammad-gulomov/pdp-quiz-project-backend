@@ -50,12 +50,10 @@ public class ModuleServiceImpl implements ModuleService {
 
     private List<Attempt> fetchAttempts(List<Module> modules) {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         List<Integer> questionListIds = modules.stream()
                 .flatMap(module -> module.getQuestionLists().stream())
                 .map(QuestionList::getId)
                 .collect(Collectors.toList());
-
-        return attemptRepository.fetchAllByQuestionListId(questionListIds, email);
+        return attemptRepository.fetchLatestAttemptsByQuestionListIdsAndEmail(questionListIds, email);
     }
 }
