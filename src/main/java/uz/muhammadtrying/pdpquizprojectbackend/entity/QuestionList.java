@@ -11,7 +11,6 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-@ToString
 @Entity
 public class QuestionList {
     @Id
@@ -23,6 +22,4 @@ public class QuestionList {
     private Module module;
     @Enumerated(EnumType.STRING)
     private DifficultyEnum difficulty;
-    @OneToMany(mappedBy = "questionList", cascade = CascadeType.ALL) // orphanRemoval = true
-    private List<Question> questions;
 }

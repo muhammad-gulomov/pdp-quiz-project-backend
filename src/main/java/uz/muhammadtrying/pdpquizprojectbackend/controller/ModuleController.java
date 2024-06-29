@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.ModuleService;
-import uz.muhammadtrying.pdpquizprojectbackend.projections.ModuleProjection;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/module")
@@ -17,11 +14,8 @@ import java.util.List;
 public class ModuleController {
     private final ModuleService moduleService;
 
-    @GetMapping("/chosen/category/modules")
-    public ResponseEntity<List<ModuleProjection>> getModulesOfChosenCategory(
-            @RequestParam String difficulty,
-            @RequestParam Integer chosenCategoryId
-    ) {
-        return ResponseEntity.ok( moduleService.findAllByCategoryId(chosenCategoryId, difficulty));
+    @GetMapping("/getall/category/difficulty")
+    public ResponseEntity<?> getAllByCategoryAndDifficulty(@RequestParam Integer categoryId, @RequestParam String difficulty) {
+        return ResponseEntity.ok().body(moduleService.getAllByCategoryAndQLdifficulty(categoryId, difficulty));
     }
 }

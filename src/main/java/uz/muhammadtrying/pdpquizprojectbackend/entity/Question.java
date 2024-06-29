@@ -11,7 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 @Getter
 @Setter
 @Entity
@@ -24,9 +23,6 @@ public class Question {
     private String questionContent;
 
     private Integer seconds;
-
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL) // orphanRemoval = true
-    private List<Option> options;
 
     @ManyToOne
     @JoinColumn(name = "question_list_id")
