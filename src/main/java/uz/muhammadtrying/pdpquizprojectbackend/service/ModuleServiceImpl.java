@@ -2,27 +2,26 @@ package uz.muhammadtrying.pdpquizprojectbackend.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.Attempt;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Module;
-import uz.muhammadtrying.pdpquizprojectbackend.entity.Question;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.QuestionList;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.enums.DifficultyEnum;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.ModuleService;
+import uz.muhammadtrying.pdpquizprojectbackend.repo.AttemptRepository;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.ModuleRepository;
-import uz.muhammadtrying.pdpquizprojectbackend.repo.QuestionListRepository;
-import uz.muhammadtrying.pdpquizprojectbackend.repo.QuestionRepository;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ModuleServiceImpl implements ModuleService {
 
     private final ModuleRepository moduleRepository;
-    private final QuestionListRepository questionListRepository;
-    private final QuestionRepository questionRepository;
+    private final AttemptRepository attemptRepository;
 
     @Override
     public void save(Module module) {
@@ -31,27 +30,32 @@ public class ModuleServiceImpl implements ModuleService {
 
     @Override
     public ResponseEntity<?> getAllByCategoryAndQLdifficulty(Integer categoryId, String difficulty) {
-        Map<String, Object> result = new HashMap<>();
-
+        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
         List<Module> modules = moduleRepository.fetchAllByCategoryId(categoryId);
-        List<QuestionList> questionLists = fetchQuestionLists(modules,difficulty);
-        List<Question> questions = fetchQuestions(questionLists);
 
-        result.put("questions", questions);
-        result.put("questionLists", questionLists);
+        modules.forEach(module -> {
+            List<QuestionList> filteredQuestionLists = module.getQuestionLists().stream()
+                    .filter(questionList -> questionList.getDifficulty().equals(DifficultyEnum.valueOf(difficulty)))
+                    .collect(Collectors.toList());
+            module.setQuestionLists(filteredQuestionLists);
+        });
+
+        List<Attempt> attempts = fetchAttempts(modules);
+
         result.put("modules", modules);
+        result.put("attempts", attempts);
 
         return ResponseEntity.ok().body(result);
     }
 
-    private List<Question> fetchQuestions(List<QuestionList> questionLists) {
-        int[] questionListIds = questionLists.stream().mapToInt(QuestionList::getId).toArray();
-        return questionRepository.findAllByQuestionListId(questionListIds);
-    }
+    private List<Attempt> fetchAttempts(List<Module> modules) {
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-    private List<QuestionList> fetchQuestionLists(List<Module> modules, String difficulty) {
-        int[] moduleIds = modules.stream().mapToInt(Module::getId).toArray();
-        DifficultyEnum difficultyEnum = DifficultyEnum.valueOf(difficulty);
-        return questionListRepository.fetchAllByModuleIds(moduleIds,difficultyEnum);
+        List<Integer> questionListIds = modules.stream()
+                .flatMap(module -> module.getQuestionLists().stream())
+                .map(QuestionList::getId)
+                .collect(Collectors.toList());
+
+        return attemptRepository.fetchAllByQuestionListId(questionListIds, email);
     }
 }

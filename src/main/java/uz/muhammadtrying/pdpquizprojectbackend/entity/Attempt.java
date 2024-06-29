@@ -30,5 +30,4 @@ public class Attempt {
 
     @OneToMany(fetch = FetchType.EAGER)
     private List<Answer> answers;
-
 }

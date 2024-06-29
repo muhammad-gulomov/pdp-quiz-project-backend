@@ -1,8 +1,8 @@
 package uz.muhammadtrying.pdpquizprojectbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,9 +20,7 @@ public class Option {
     private String optionContent;
 
     private Boolean isCorrect;
-
     @ManyToOne
-    @JoinColumn(name = "question_id")
+    @JsonIgnore
     private Question question;
-
 }

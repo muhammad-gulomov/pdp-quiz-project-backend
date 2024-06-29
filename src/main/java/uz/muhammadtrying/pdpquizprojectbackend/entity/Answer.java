@@ -3,6 +3,7 @@ package uz.muhammadtrying.pdpquizprojectbackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.security.Timestamp;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,9 +20,6 @@ public class Answer {
 
     @OneToOne
     private Option chosenOption;
-
-    private Integer timeSpent;
-
+    private Timestamp timeSpent;
     private Integer score;
-
 }
