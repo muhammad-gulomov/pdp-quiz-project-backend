@@ -3,7 +3,7 @@ package uz.muhammadtrying.pdpquizprojectbackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,7 +20,7 @@ public class Attempt {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    private Timestamp date;
+    private LocalDateTime dateTime;
 
     @ManyToOne
     private User user;

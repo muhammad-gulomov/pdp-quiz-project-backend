@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.UserDTO;
@@ -13,8 +15,10 @@ import uz.muhammadtrying.pdpquizprojectbackend.entity.User;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.UserService;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.TempUserRepository;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.UserRepository;
+import uz.muhammadtrying.pdpquizprojectbackend.security.CustomUserDetailsService;
 
 import java.security.SecureRandom;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -24,6 +28,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final TempUserRepository tempUserRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CustomUserDetailsService customUserDetailsService;
     @Value("${spring.mail.username}")
     private String from;
 
@@ -83,5 +88,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public TempUser getDataFromTempDB(String email) {
         return tempUserRepository.findByEmail(email);
+    }
+
+    @Override
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = (String) authentication.getPrincipal();
+        return userRepository.findByEmail(email);
     }
 }

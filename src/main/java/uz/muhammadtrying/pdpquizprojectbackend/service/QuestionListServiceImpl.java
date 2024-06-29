@@ -6,6 +6,8 @@ import uz.muhammadtrying.pdpquizprojectbackend.entity.QuestionList;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.QuestionListService;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.QuestionListRepository;
 
+import java.util.Optional;
+
 
 @RequiredArgsConstructor
 @Service
@@ -16,5 +18,10 @@ public class QuestionListServiceImpl implements QuestionListService {
     @Override
     public void save(QuestionList questionList) {
         questionListRepository.save(questionList);
+    }
+
+    @Override
+    public Optional<QuestionList> findById(Integer questionListId) {
+        return questionListRepository.findById(questionListId);
     }
 }

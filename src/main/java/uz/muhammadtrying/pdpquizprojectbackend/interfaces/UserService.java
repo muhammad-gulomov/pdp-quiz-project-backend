@@ -3,6 +3,9 @@ package uz.muhammadtrying.pdpquizprojectbackend.interfaces;
 import org.springframework.stereotype.Service;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.UserDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.TempUser;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.User;
+
+import java.util.Optional;
 
 @Service
 public interface UserService {
@@ -16,4 +19,7 @@ public interface UserService {
     void addDataToTempDB(UserDTO userDTO, String code);
 
     TempUser getDataFromTempDB(String email);
+
+    User getCurrentUser();
+
 }
