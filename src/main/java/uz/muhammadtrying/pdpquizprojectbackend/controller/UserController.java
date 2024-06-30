@@ -29,7 +29,7 @@ public class UserController {
         UserInfoDTO userInfoDTO = new UserInfoDTO();
         userInfoDTO.setFirstName(user.getFirstName());
         userInfoDTO.setLastName(user.getLastName());
-        userInfoDTO.setPhotoUrl(user.getPhotoUrl());
+        userInfoDTO.setPhotoUrl(user.getPhoto());
         return ResponseEntity.ok(userInfoDTO);
     }
 

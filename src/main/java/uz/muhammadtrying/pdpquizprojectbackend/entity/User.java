@@ -2,7 +2,6 @@ package uz.muhammadtrying.pdpquizprojectbackend.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
@@ -13,7 +12,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -35,7 +33,7 @@ public class User implements UserDetails {
     private String email;
     @NotBlank
     private String password;
-    private String photoUrl;
+    private byte[] photo;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

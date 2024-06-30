@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class UserInfoDTO {
     private String firstName;
     private String lastName;
-    private String photoUrl;
+    private byte[] photoUrl;
 }

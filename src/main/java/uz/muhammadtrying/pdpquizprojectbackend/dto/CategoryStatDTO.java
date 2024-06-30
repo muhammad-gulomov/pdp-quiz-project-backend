@@ -7,8 +7,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CategoryDTO {
+public class CategoryStatDTO {
     private Integer id;
     private String name;
     private byte[] photo;
+
+    private Integer modulesFinished;
+
+    private Integer easyQuestionListCount;
+    private Integer mediumQuestionListCount;
+    private Integer hardQuestionListCount;
 }

@@ -22,8 +22,4 @@ public class AttemptController {
     public ResponseEntity<?> createAnAttempt(@RequestBody List<Answer> answers, @RequestParam Integer questionListId) {
         return ResponseEntity.status(HttpStatus.CREATED).body(attemptService.createAnAttempt(answers, questionListId));
     }
-
-
-
-
 }
