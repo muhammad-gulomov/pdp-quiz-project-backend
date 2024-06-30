@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import uz.muhammadtrying.pdpquizprojectbackend.dto.UserCredDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.UserDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.TempUser;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.User;
@@ -74,6 +75,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
     public void addDataToTempDB(UserDTO userDTO, String code) {
         TempUser tempUser = TempUser.builder()
                 .firstName(userDTO.getFirstName())
@@ -95,5 +101,21 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = (String) authentication.getPrincipal();
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public void checkIfValidAndSet(UserCredDTO userCredDTO, User currentUser) {
+        if (userCredDTO.getFirstName() != null && !userCredDTO.getFirstName().isBlank()) {
+            currentUser.setFirstName(userCredDTO.getFirstName());
+        }
+        if (userCredDTO.getLastName() != null && !userCredDTO.getLastName().isBlank()) {
+            currentUser.setLastName(userCredDTO.getLastName());
+        }
+        if (userCredDTO.getPassword() != null && !userCredDTO.getPassword().isBlank()) {
+            currentUser.setPassword(userCredDTO.getPassword());
+        }
+        if (userCredDTO.getPhotoUrl() != null && !userCredDTO.getPhotoUrl().isBlank()) {
+            currentUser.setPhotoUrl(userCredDTO.getPhotoUrl());
+        }
     }
 }
