@@ -13,7 +13,6 @@ import uz.muhammadtrying.pdpquizprojectbackend.entity.Category;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.User;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.AttemptService;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.CategoryService;
-import uz.muhammadtrying.pdpquizprojectbackend.interfaces.UserService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +25,6 @@ import java.util.Optional;
 public class LeaderboardController {
 
     private final AttemptService attemptService;
-    private final UserService userService;
     private final CategoryService categoryService;
 
     @GetMapping("/get/{categoryId}")
@@ -59,5 +57,4 @@ public class LeaderboardController {
 
         return ResponseEntity.ok(leaderboard);
     }
-
 }

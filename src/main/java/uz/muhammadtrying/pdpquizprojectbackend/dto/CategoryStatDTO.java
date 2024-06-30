@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class CategoryStatDTO {
     private Integer id;
     private String name;
-    private byte[] photo;
+    private String photo;
 
     private Integer modulesFinished;
 

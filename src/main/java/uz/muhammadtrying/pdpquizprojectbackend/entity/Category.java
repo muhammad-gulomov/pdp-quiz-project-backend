@@ -16,5 +16,5 @@ public class Category {
     @Column(name = "id", nullable = false)
     private Integer id;
     private String name;
-    private byte[] photo;
+    private String photo;
 }
