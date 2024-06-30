@@ -11,6 +11,7 @@ import uz.muhammadtrying.pdpquizprojectbackend.interfaces.CategoryService;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -63,5 +64,10 @@ public class CategoryServiceImpl implements CategoryService {
                     hardQuestionListCount
             );
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Category> findById(Integer categoryId) {
+        return categoryRepository.findById(categoryId);
     }
 }

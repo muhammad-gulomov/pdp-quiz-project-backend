@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class UserSettingsDTO {
-    private String photoUrl;
+    private byte[] photo;
     private String fullName;
     private String email;
 }

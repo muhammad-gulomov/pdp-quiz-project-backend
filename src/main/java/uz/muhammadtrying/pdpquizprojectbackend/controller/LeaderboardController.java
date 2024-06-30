@@ -49,7 +49,7 @@ public class LeaderboardController {
             LeaderboardDTO dto = new LeaderboardDTO(
                     new CategoryDTO(category.getId(), category.getName(), category.getPhoto()),
                     rank++,
-                    user.getPhotoUrl(),
+                    user.getPhoto(),
                     user.getFirstName() + " " + user.getLastName(),
                     score
             );

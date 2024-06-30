@@ -6,6 +6,7 @@ import uz.muhammadtrying.pdpquizprojectbackend.dto.CategoryStatDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Category;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface CategoryService {
@@ -14,4 +15,6 @@ public interface CategoryService {
     List<CategoryDTO> findAll();
 
     List<CategoryStatDTO> fetchCategoryStats();
+
+    Optional<Category> findById(Integer categoryId);
 }

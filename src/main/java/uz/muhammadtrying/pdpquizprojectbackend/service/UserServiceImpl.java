@@ -116,8 +116,8 @@ public class UserServiceImpl implements UserService {
         if (userCredDTO.getPassword() != null && !userCredDTO.getPassword().isBlank()) {
             currentUser.setPassword(userCredDTO.getPassword());
         }
-        if (userCredDTO.getPhotoUrl() != null && !userCredDTO.getPhotoUrl().isBlank()) {
-            currentUser.setPhotoUrl(userCredDTO.getPhotoUrl());
+        if (userCredDTO.getPhoto() != null) {
+            currentUser.setPhoto(userCredDTO.getPhoto());
         }
     }
 

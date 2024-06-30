@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserCredDTO {
-    private String photoUrl;
+    private byte[] photo;
     private String firstName;
     private String lastName;
     private String password;

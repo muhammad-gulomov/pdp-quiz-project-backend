@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class LeaderboardDTO {
     private CategoryDTO categoryDTO;
     private Integer rank;
-    private String photoUrl;
+    private byte[] photo;
     private String fullName;
     private Integer score;
 }
