@@ -11,16 +11,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.UserCredDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.UserDTO;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.Category;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.TempUser;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.User;
+import uz.muhammadtrying.pdpquizprojectbackend.interfaces.AttemptService;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.UserService;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.TempUserRepository;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.UserRepository;
 import uz.muhammadtrying.pdpquizprojectbackend.security.CustomUserDetailsService;
 
 import java.security.SecureRandom;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -118,4 +120,11 @@ public class UserServiceImpl implements UserService {
             currentUser.setPhotoUrl(userCredDTO.getPhotoUrl());
         }
     }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+
 }

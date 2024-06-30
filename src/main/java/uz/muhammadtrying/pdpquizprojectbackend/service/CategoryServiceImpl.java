@@ -8,6 +8,7 @@ import uz.muhammadtrying.pdpquizprojectbackend.interfaces.CategoryService;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.CategoryRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -23,5 +24,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryDTO> findAll() {
         return categoryRepository.findAllDTO();
+    }
+
+    @Override
+    public Optional<Category> findById(Integer categoryId) {
+        return categoryRepository.findById(categoryId);
     }
 }

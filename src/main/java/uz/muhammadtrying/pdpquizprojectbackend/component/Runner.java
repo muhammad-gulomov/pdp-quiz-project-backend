@@ -43,7 +43,7 @@ public class Runner implements CommandLineRunner {
         // 5 questions per questionList (overall 60),
         // 3 options per question (overall 180)
 
-        generateUser();
+        generateUsers();
 
         Category category1 = Category.builder().name("Java").build();
         Category category2 = Category.builder().name("Python").build();
@@ -250,13 +250,22 @@ public class Runner implements CommandLineRunner {
         };
     }
 
-    private void generateUser() {
-        User user = User.builder()
+    private void generateUsers() {
+        User user1 = User.builder()
+                .firstName("Farangiz")
+                .lastName("Nasriddinova")
+                .email("farangizxon2004@gmail.com")
+                .password(passwordEncoder.encode("1"))
+                .build();
+        userRepository.save(user1);
+
+
+        User user2 = User.builder()
                 .firstName("Muhammad")
                 .lastName("G'ulomov")
                 .email("muhammadtrying@gmail.com")
                 .password(passwordEncoder.encode("1"))
                 .build();
-        userRepository.save(user);
+        userRepository.save(user2);
     }
 }
