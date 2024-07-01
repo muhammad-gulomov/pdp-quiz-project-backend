@@ -23,7 +23,7 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<?> getCategories() {
-        List<Category> categories = categoryService.findAllCategories();
+        List<Category> categories = categoryService.findAll();
         return ResponseEntity.ok(categories);
     }
 
@@ -42,7 +42,7 @@ public class CategoryController {
     @GetMapping("/get/all")
     public ResponseEntity<?> findAll() {
         Map<String, Object> result = new HashMap<>();
-        result.put("categories", categoryService.findAll());
+        result.put("categories", categoryService.findAllDTO());
         result.put("user", userService.getCurrentUser());
         return ResponseEntity.status(200).body(result);
     }

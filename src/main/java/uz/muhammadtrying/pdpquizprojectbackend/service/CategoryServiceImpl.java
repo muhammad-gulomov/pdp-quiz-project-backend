@@ -33,9 +33,10 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.save(category);
     }
 
+
     @Override
-    public List<CategoryDTO> findAll() {
-        return categoryRepository.findAllDTO();
+    public List<Category> findAll() {
+        return categoryRepository.findAll();
     }
 
     @Override
@@ -92,5 +93,15 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Optional<Category> findById(Integer categoryId) {
         return categoryRepository.findById(categoryId);
+    }
+
+    @Override
+    public void delete(Category category) {
+        categoryRepository.delete(category);
+    }
+
+    @Override
+    public List<CategoryDTO> findAllDTO() {
+        return categoryRepository.findAllDTO();
     }
 }

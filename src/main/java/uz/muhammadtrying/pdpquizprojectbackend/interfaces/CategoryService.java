@@ -12,13 +12,13 @@ import java.util.Optional;
 public interface CategoryService {
     void save(Category category);
 
-    List<CategoryDTO> findAll();
-
-    List<Category> findAllCategories();
+    List<Category> findAll();
 
     List<CategoryStatDTO> fetchCategoryStats();
 
     Optional<Category> findById(Integer categoryId);
 
     void delete(Category category);
+
+    List<CategoryDTO> findAllDTO();
 }
