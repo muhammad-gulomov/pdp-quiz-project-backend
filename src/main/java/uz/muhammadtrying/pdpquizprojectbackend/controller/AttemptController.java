@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Answer;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.Attempt;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.AttemptService;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,24 @@ import java.util.Optional;
 public class AttemptController {
 
     private final AttemptService attemptService;
+
+    @GetMapping
+    public ResponseEntity<List<Attempt>> getAttempts() {
+        List<Attempt> attempts = attemptService.findAll();
+        return ResponseEntity.ok(attempts);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteAttempt(@RequestParam int attemptId) {
+        Optional<Attempt> attemptOptional = attemptService.findById(attemptId);
+        if (attemptOptional.isPresent()) {
+            Attempt attempt = attemptOptional.get();
+            attemptService.delete(attempt);
+            return ResponseEntity.ok().build();
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @PostMapping("/create")
     public ResponseEntity<?> createAnAttempt(@RequestBody List<Answer> answers, @RequestParam Integer questionListId) {

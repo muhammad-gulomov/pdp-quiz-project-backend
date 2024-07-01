@@ -83,6 +83,21 @@ public class AttemptServiceImpl implements AttemptService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Attempt> findAll() {
+        return attemptRepository.findAll();
+    }
+
+    @Override
+    public Optional<Attempt> findById(int attemptId) {
+        return attemptRepository.findById(attemptId);
+    }
+
+    @Override
+    public void delete(Attempt attempt) {
+        attemptRepository.delete(attempt);
+    }
+
 
     private ResultDTO formResultDTO(QuestionList questionList, List<Answer> answers) {
         ResultDTO resultDTO = new ResultDTO();

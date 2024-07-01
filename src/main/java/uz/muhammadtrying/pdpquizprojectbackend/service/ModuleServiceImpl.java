@@ -14,6 +14,7 @@ import uz.muhammadtrying.pdpquizprojectbackend.repo.ModuleRepository;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +23,21 @@ public class ModuleServiceImpl implements ModuleService {
 
     private final ModuleRepository moduleRepository;
     private final AttemptRepository attemptRepository;
+
+    @Override
+    public List<Module> findAll() {
+        return moduleRepository.findAll();
+    }
+
+    @Override
+    public Optional<Module> findById(int moduleId) {
+        return moduleRepository.findById(moduleId);
+    }
+
+    @Override
+    public void delete(Module module) {
+        moduleRepository.delete(module);
+    }
 
     @Override
     public void save(Module module) {
