@@ -18,18 +18,17 @@ public class JwtUtil {
                 .subject(userDetails.getUsername())
                 .issuer("Muhammad's Production")
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 1000))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // 24 hours expiration
                 .signWith(secretKey())
                 .compact();
     }
 
     public String generateRefreshToken(LogInDTO logInDTO) {
-        // generating a refresh token which is renewed on a daily basis
         return Jwts.builder()
                 .subject(logInDTO.getEmail())
                 .issuer("Muhammad's Production")
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 2)) // 48 hours expiration
                 .signWith(secretKey())
                 .compact();
     }
