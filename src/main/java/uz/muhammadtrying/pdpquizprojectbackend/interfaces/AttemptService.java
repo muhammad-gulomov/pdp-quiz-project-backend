@@ -8,6 +8,7 @@ import uz.muhammadtrying.pdpquizprojectbackend.entity.Category;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface AttemptService {
@@ -18,4 +19,10 @@ public interface AttemptService {
     int calculateTotalScoreByUserAndCategory(User user, Category category);
 
     List<User> findAllByCategoryOrderByScoreDesc(Category category);
+
+    List<Attempt> findAll();
+
+    Optional<Attempt> findById(int attemptId);
+
+    void delete(Attempt attempt);
 }

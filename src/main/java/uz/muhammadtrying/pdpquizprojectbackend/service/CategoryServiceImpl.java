@@ -34,6 +34,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<Category> findAllCategories() {
+        return categoryRepository.findAll();
+    }
+
+    @Override
     public List<CategoryStatDTO> fetchCategoryStats() {
         return categoryRepository.findAll().stream().map(category -> {
             List<Module> modules = moduleRepository.findAllByCategory(category);
@@ -69,5 +74,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Optional<Category> findById(Integer categoryId) {
         return categoryRepository.findById(categoryId);
+    }
+
+    @Override
+    public void delete(Category category) {
+        categoryRepository.delete(category);
     }
 }

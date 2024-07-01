@@ -14,7 +14,11 @@ public interface CategoryService {
 
     List<CategoryDTO> findAll();
 
+    List<Category> findAllCategories();
+
     List<CategoryStatDTO> fetchCategoryStats();
 
     Optional<Category> findById(Integer categoryId);
+
+    void delete(Category category);
 }
