@@ -20,6 +20,6 @@ public class Answer {
 
     @OneToOne
     private Option chosenOption;
-    private Timestamp timeSpent;
+    private Float timeSpent;
     private Integer score;
 }
