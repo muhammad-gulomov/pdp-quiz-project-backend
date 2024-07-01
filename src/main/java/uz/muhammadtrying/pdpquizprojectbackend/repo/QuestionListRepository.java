@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface QuestionListRepository extends JpaRepository<QuestionList, Integer> {
     List<QuestionList> findAllByModuleAndDifficulty(Module module, DifficultyEnum difficulty);
+
+    List<QuestionList> findAllByModule(Module module);
 }

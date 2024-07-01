@@ -6,11 +6,15 @@ import uz.muhammadtrying.pdpquizprojectbackend.dto.CategoryDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.CategoryStatDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Category;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Module;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.QuestionList;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.enums.DifficultyEnum;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.CategoryService;
+import uz.muhammadtrying.pdpquizprojectbackend.interfaces.UserService;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -22,6 +26,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final ModuleRepository moduleRepository;
     private final AttemptRepository attemptRepository;
     private final QuestionListRepository questionListRepository;
+    private final UserService userService;
 
     @Override
     public void save(Category category) {
@@ -35,35 +40,53 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryStatDTO> fetchCategoryStats() {
+
+        Integer userId = userService.getCurrentUser().getId();
+
         return categoryRepository.findAll().stream().map(category -> {
             List<Module> modules = moduleRepository.findAllByCategory(category);
 
             int modulesFinished = (int) modules.stream()
-                    .filter(module -> attemptRepository.countByQuestionListModule(module) > 0)
+                    .filter(module -> isModuleSolvedByUser(module, userId))
                     .count();
 
-            int easyQuestionListCount = (int) modules.stream()
-                    .flatMap(module -> questionListRepository.findAllByModuleAndDifficulty(module, DifficultyEnum.EASY).stream())
-                    .count();
+            Map<String, Integer> easyQuestionList = new HashMap<>();
+            Map<String, Integer> mediumQuestionList = new HashMap<>();
+            Map<String, Integer> hardQuestionList = new HashMap<>();
 
-            int mediumQuestionListCount = (int) modules.stream()
-                    .flatMap(module -> questionListRepository.findAllByModuleAndDifficulty(module, DifficultyEnum.MEDIUM).stream())
-                    .count();
-
-            int hardQuestionListCount = (int) modules.stream()
-                    .flatMap(module -> questionListRepository.findAllByModuleAndDifficulty(module, DifficultyEnum.HARD).stream())
-                    .count();
+            updateQuestionListCounts(modules, easyQuestionList, DifficultyEnum.EASY, userId);
+            updateQuestionListCounts(modules, mediumQuestionList, DifficultyEnum.MEDIUM, userId);
+            updateQuestionListCounts(modules, hardQuestionList, DifficultyEnum.HARD, userId);
 
             return new CategoryStatDTO(
                     category.getId(),
                     category.getName(),
                     category.getPhoto(),
                     modulesFinished,
-                    easyQuestionListCount,
-                    mediumQuestionListCount,
-                    hardQuestionListCount
+                    easyQuestionList,
+                    mediumQuestionList,
+                    hardQuestionList
             );
         }).collect(Collectors.toList());
+    }
+
+    private void updateQuestionListCounts(List<Module> modules, Map<String, Integer> questionListMap, DifficultyEnum difficulty, Integer userId) {
+        questionListMap.put("total", 0);
+        questionListMap.put("solved", 0);
+
+        modules.stream()
+                .flatMap(module -> questionListRepository.findAllByModuleAndDifficulty(module, difficulty).stream())
+                .forEach(questionList -> {
+                    questionListMap.put("total", questionListMap.get("total") + 1);
+                    if (attemptRepository.isQuestionListSolvedByUser(questionList, userId)) {
+                        questionListMap.put("solved", questionListMap.get("solved") + 1);
+                    }
+                });
+    }
+
+    private boolean isModuleSolvedByUser(Module module, Integer userId) {
+        return questionListRepository.findAllByModule(module).stream()
+                .allMatch(questionList -> attemptRepository.isQuestionListSolvedByUser(questionList, userId));
     }
 
     @Override

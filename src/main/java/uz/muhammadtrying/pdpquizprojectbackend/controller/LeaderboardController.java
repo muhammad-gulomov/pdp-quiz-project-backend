@@ -54,7 +54,6 @@ public class LeaderboardController {
 
             leaderboard.add(dto);
         }
-
         return ResponseEntity.ok(leaderboard);
     }
 }

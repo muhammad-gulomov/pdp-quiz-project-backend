@@ -4,13 +4,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Attempt;
-import uz.muhammadtrying.pdpquizprojectbackend.entity.Category;
-import uz.muhammadtrying.pdpquizprojectbackend.entity.Module;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.QuestionList;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.User;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.Category;
 
 import java.util.List;
 
 public interface AttemptRepository extends JpaRepository<Attempt, Integer> {
+
     @Query("""
             SELECT a FROM Attempt a
             WHERE a.id IN (
@@ -24,8 +25,17 @@ public interface AttemptRepository extends JpaRepository<Attempt, Integer> {
             @Param("questionListIds") List<Integer> questionListIds,
             @Param("email") String email);
 
-    long countByQuestionListModule(Module module);
+    @Query("""
+            SELECT CASE WHEN COUNT(a) = COUNT(q) THEN TRUE ELSE FALSE END
+            FROM Question q
+            LEFT JOIN q.options o ON o.isCorrect = TRUE
+            LEFT JOIN Answer ans ON ans.chosenOption = o
+            LEFT JOIN Attempt a ON a.questionList = q.questionList AND a.user.id = :userId
+            WHERE q.questionList = :questionList
+            GROUP BY q.questionList
+            """)
+    boolean isQuestionListSolvedByUser(@Param("questionList") QuestionList questionList, @Param("userId") Integer userId);
 
-    @Query("select a from Attempt a where a.user = :user AND a.questionList.module.category = :category")
+    @Query("SELECT a FROM Attempt a WHERE a.user = :user AND a.questionList.module.category = :category")
     List<Attempt> findByUserAndCategory(@Param("user") User user, @Param("category") Category category);
 }

@@ -55,7 +55,6 @@ public class AttemptServiceImpl implements AttemptService {
 
         ResultDTO resultDTO = formResultDTO(questionList, answers);
 
-//        return ResponseEntity.status(HttpStatus.CREATED).body("Attempt created successfully");
         return ResponseEntity.status(HttpStatus.CREATED).body(resultDTO);
     }
 
