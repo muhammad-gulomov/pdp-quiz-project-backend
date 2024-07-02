@@ -318,6 +318,7 @@ public class Runner implements CommandLineRunner {
                 .email("farangizxon2004@gmail.com")
                 .password(passwordEncoder.encode("1"))
                 .build();
+
         User user3 = User.builder()
                 .firstName("Asliddin")
                 .lastName("Musulmanov")

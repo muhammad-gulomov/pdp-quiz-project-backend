@@ -4,12 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import uz.muhammadtrying.pdpquizprojectbackend.dto.AttemptDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.ResultDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.*;
-import uz.muhammadtrying.pdpquizprojectbackend.interfaces.AnswerService;
-import uz.muhammadtrying.pdpquizprojectbackend.interfaces.AttemptService;
-import uz.muhammadtrying.pdpquizprojectbackend.interfaces.QuestionListService;
-import uz.muhammadtrying.pdpquizprojectbackend.interfaces.UserService;
+import uz.muhammadtrying.pdpquizprojectbackend.interfaces.*;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.AttemptRepository;
 
 import java.time.LocalDateTime;
@@ -24,11 +22,13 @@ public class AttemptServiceImpl implements AttemptService {
     private final QuestionListService questionListService;
     private final UserService userService;
     private final AnswerService answerService;
+    private final OptionService optionService;
 
     @Override
     public void save(Attempt attempt) {
         attemptRepository.save(attempt);
     }
+
 
     @Override
     public ResponseEntity<?> createAnAttempt(List<Answer> answers, Integer questionListId) {
@@ -38,10 +38,10 @@ public class AttemptServiceImpl implements AttemptService {
         }
 
         Optional<QuestionList> questionListOptional = questionListService.findById(questionListId);
-
         if (questionListOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("QuestionList not found");
         }
+
         QuestionList questionList = questionListOptional.get();
 
         User currentUser = userService.getCurrentUser();
@@ -55,17 +55,7 @@ public class AttemptServiceImpl implements AttemptService {
 
         ResultDTO resultDTO = formResultDTO(questionList, answers);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(resultDTO);
-    }
-
-    @Override
-    public int calculateTotalScoreByUserAndCategory(User user, Category category) {
-        List<Attempt> attempts = attemptRepository.findByUserAndCategory(user, category);
-
-        return attempts.stream()
-                .flatMap(attempt -> attempt.getAnswers().stream())
-                .mapToInt(answer -> answer.getChosenOption().getIsCorrect() ? 1 : 0)
-                .sum();
+        return ResponseEntity.status(200).body(resultDTO);
     }
 
     public List<User> findAllByCategoryOrderByScoreDesc(Category category) {
@@ -84,18 +74,13 @@ public class AttemptServiceImpl implements AttemptService {
     }
 
     @Override
-    public List<Attempt> findAll() {
-        return attemptRepository.findAll();
-    }
+    public int calculateTotalScoreByUserAndCategory(User user, Category category) {
+        List<Attempt> attempts = attemptRepository.findByUserAndCategory(user, category);
 
-    @Override
-    public Optional<Attempt> findById(int attemptId) {
-        return attemptRepository.findById(attemptId);
-    }
-
-    @Override
-    public void delete(Attempt attempt) {
-        attemptRepository.delete(attempt);
+        return attempts.stream()
+                .flatMap(attempt -> attempt.getAnswers().stream())
+                .mapToInt(answer -> answer.getChosenOption().getIsCorrect() ? 1 : 0)
+                .sum();
     }
 
 
@@ -138,6 +123,7 @@ public class AttemptServiceImpl implements AttemptService {
         attemptRepository.save(attempt);
     }
 
+
     private void saveAnswers(List<Answer> answers) {
         for (Answer answer : answers) {
             Optional<Answer> existingAnswerOptional = answerService.findByChosenOption(answer.getChosenOption());
@@ -150,5 +136,35 @@ public class AttemptServiceImpl implements AttemptService {
                 answerService.save(answer);
             }
         }
+    }
+
+    @Override
+    public List<Answer> fromAttemptDTOtoEntity(AttemptDTO attemptDTO) {
+        List<Answer> answers = attemptDTO.getAnswers().stream().map(dto -> {
+            Answer answer = new Answer();
+            Optional<Option> optionOptional = optionService.findById(dto.getChosenOption().getId());
+            if (optionOptional.isPresent()) {
+                Option option = optionOptional.get();
+                answer.setChosenOption(option);
+            }
+            answer.setTimeSpent(dto.getTimeSpent());
+            return answer;
+        }).collect(Collectors.toList());
+        return answers;
+    }
+
+    @Override
+    public List<Attempt> findAll() {
+        return attemptRepository.findAll();
+    }
+
+    @Override
+    public Optional<Attempt> findById(int attemptId) {
+        return attemptRepository.findById(attemptId);
+    }
+
+    @Override
+    public void delete(Attempt attempt) {
+        attemptRepository.delete(attempt);
     }
 }

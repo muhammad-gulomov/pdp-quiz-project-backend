@@ -2,6 +2,8 @@ package uz.muhammadtrying.pdpquizprojectbackend.interfaces;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import uz.muhammadtrying.pdpquizprojectbackend.dto.AttemptDTO;
+import uz.muhammadtrying.pdpquizprojectbackend.dto.ResultDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Answer;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Attempt;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Category;
@@ -25,4 +27,6 @@ public interface AttemptService {
     Optional<Attempt> findById(int attemptId);
 
     void delete(Attempt attempt);
+
+    List<Answer> fromAttemptDTOtoEntity(AttemptDTO attemptDTO);
 }

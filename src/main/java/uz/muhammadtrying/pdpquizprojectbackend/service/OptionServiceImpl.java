@@ -6,6 +6,8 @@ import uz.muhammadtrying.pdpquizprojectbackend.entity.Option;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.OptionService;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.OptionRepository;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class OptionServiceImpl implements OptionService {
@@ -14,5 +16,10 @@ public class OptionServiceImpl implements OptionService {
     @Override
     public void save(Option option) {
         optionRepository.save(option);
+    }
+
+    @Override
+    public Optional<Option> findById(Integer id) {
+        return optionRepository.findById(id);
     }
 }
