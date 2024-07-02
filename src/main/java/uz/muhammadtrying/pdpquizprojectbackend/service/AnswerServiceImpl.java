@@ -7,18 +7,12 @@ import uz.muhammadtrying.pdpquizprojectbackend.entity.Option;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.AnswerService;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.AnswerRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class AnswerServiceImpl implements AnswerService {
     private final AnswerRepository answerRepository;
-
-    @Override
-    public void saveAll(List<Answer> answers) {
-        answerRepository.saveAll(answers);
-    }
 
     @Override
     public Optional<Answer> findByChosenOption(Option chosenOption) {

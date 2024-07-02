@@ -6,7 +6,6 @@ import uz.muhammadtrying.pdpquizprojectbackend.dto.CategoryDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.CategoryStatDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Category;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Module;
-import uz.muhammadtrying.pdpquizprojectbackend.entity.QuestionList;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.enums.DifficultyEnum;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.CategoryService;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.UserService;

@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Service
 public interface AnswerService {
-    void saveAll(List<Answer> answers);
 
     Optional<Answer> findByChosenOption(Option chosenOption);
 

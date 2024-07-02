@@ -7,7 +7,6 @@ import uz.muhammadtrying.pdpquizprojectbackend.entity.TempUser;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.User;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public interface UserService {

@@ -3,8 +3,6 @@ package uz.muhammadtrying.pdpquizprojectbackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.security.Timestamp;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

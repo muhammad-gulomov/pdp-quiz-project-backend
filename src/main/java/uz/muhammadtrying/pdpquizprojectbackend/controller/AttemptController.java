@@ -5,17 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.AttemptDTO;
-import uz.muhammadtrying.pdpquizprojectbackend.dto.ResultDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Answer;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Attempt;
-import uz.muhammadtrying.pdpquizprojectbackend.entity.Option;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.AttemptService;
-import uz.muhammadtrying.pdpquizprojectbackend.interfaces.OptionService;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/attempt")
@@ -23,7 +18,6 @@ import java.util.stream.Collectors;
 public class AttemptController {
 
     private final AttemptService attemptService;
-    private final OptionService optionService;
 
     @GetMapping
     public ResponseEntity<List<Attempt>> getAttempts() {

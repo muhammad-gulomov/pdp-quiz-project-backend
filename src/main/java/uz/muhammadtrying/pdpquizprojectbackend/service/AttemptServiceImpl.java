@@ -140,7 +140,7 @@ public class AttemptServiceImpl implements AttemptService {
 
     @Override
     public List<Answer> fromAttemptDTOtoEntity(AttemptDTO attemptDTO) {
-        List<Answer> answers = attemptDTO.getAnswers().stream().map(dto -> {
+        return attemptDTO.getAnswers().stream().map(dto -> {
             Answer answer = new Answer();
             Optional<Option> optionOptional = optionService.findById(dto.getChosenOption().getId());
             if (optionOptional.isPresent()) {
@@ -150,7 +150,6 @@ public class AttemptServiceImpl implements AttemptService {
             answer.setTimeSpent(dto.getTimeSpent());
             return answer;
         }).collect(Collectors.toList());
-        return answers;
     }
 
     @Override
