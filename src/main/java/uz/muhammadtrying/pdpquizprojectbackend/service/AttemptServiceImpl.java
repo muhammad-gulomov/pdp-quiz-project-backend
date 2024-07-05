@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.AttemptDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.ResultDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.*;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.enums.DifficultyEnum;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.*;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.AttemptRepository;
 
@@ -120,9 +121,31 @@ public class AttemptServiceImpl implements AttemptService {
                 .dateTime(LocalDateTime.now())
                 .questionList(questionList)
                 .build();
+        for (Answer answer : attempt.getAnswers()) {
+            Option chosenOption = answer.getChosenOption();
+            if (chosenOption != null) {
+                float timeSpent = answer.getTimeSpent();
+                float maxTime = chosenOption.getQuestion().getSeconds();
+                DifficultyEnum difficulty = chosenOption.getQuestion().getQuestionList().getDifficulty();
+                boolean isCorrect = chosenOption.getIsCorrect();
+
+                int score = calculateScore(timeSpent, maxTime, difficulty, isCorrect);
+                answer.setScore(score);
+            }
+        }
+
         attemptRepository.save(attempt);
     }
 
+    private int calculateScore(float timeSpent, float maxTime, DifficultyEnum difficulty, boolean isCorrect) {
+        float timeFactor = 1 - (timeSpent / maxTime);
+        int difficultyFactor = difficulty.getFactor();
+        int correctFactor = isCorrect ? 1 : 0;
+
+        int score = (int) (100 * timeFactor * difficultyFactor) + correctFactor;
+
+        return score;
+    }
 
     private void saveAnswers(List<Answer> answers) {
         for (Answer answer : answers) {
