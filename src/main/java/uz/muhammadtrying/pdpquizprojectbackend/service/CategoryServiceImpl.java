@@ -9,7 +9,10 @@ import uz.muhammadtrying.pdpquizprojectbackend.entity.Module;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.enums.DifficultyEnum;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.CategoryService;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.UserService;
-import uz.muhammadtrying.pdpquizprojectbackend.repo.*;
+import uz.muhammadtrying.pdpquizprojectbackend.repo.AttemptRepository;
+import uz.muhammadtrying.pdpquizprojectbackend.repo.CategoryRepository;
+import uz.muhammadtrying.pdpquizprojectbackend.repo.ModuleRepository;
+import uz.muhammadtrying.pdpquizprojectbackend.repo.QuestionListRepository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findAll();
     }
 
+
     @Override
     public List<CategoryStatDTO> fetchCategoryStats() {
 
@@ -61,7 +65,7 @@ public class CategoryServiceImpl implements CategoryService {
             return new CategoryStatDTO(
                     category.getId(),
                     category.getName(),
-                    category.getPhoto(),
+                    category.getAttachment().getId(),
                     modulesFinished,
                     easyQuestionList,
                     mediumQuestionList,
@@ -94,13 +98,14 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findById(categoryId);
     }
 
-    @Override
-    public void delete(Category category) {
-        categoryRepository.delete(category);
-    }
 
     @Override
     public List<CategoryDTO> findAllDTO() {
         return categoryRepository.findAllDTO();
+    }
+
+    @Override
+    public void delete(Category category) {
+
     }
 }

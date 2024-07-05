@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class CategoryDTO {
     private Integer id;
     private String name;
-    private String photo;
+    private Integer attachmentId;
 }

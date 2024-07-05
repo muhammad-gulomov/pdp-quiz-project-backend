@@ -33,7 +33,8 @@ public class User implements UserDetails {
     private String email;
     @NotBlank
     private String password;
-    private byte[] photo;
+    @OneToOne
+    private Attachment photo;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -20,7 +20,7 @@ public class UserController {
         User currentUser = userService.getCurrentUser();
 
         UserSettingsDTO userSettingsDTO = new UserSettingsDTO();
-        userSettingsDTO.setPhoto(currentUser.getPhoto());
+        userSettingsDTO.setAttachmentId(currentUser.getPhoto().getId());
         userSettingsDTO.setEmail(currentUser.getEmail());
         userSettingsDTO.setFullName(currentUser.getFirstName() + " " + currentUser.getLastName());
 

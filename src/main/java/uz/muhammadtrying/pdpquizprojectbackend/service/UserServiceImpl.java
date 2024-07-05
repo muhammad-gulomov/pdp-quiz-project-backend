@@ -18,7 +18,8 @@ import uz.muhammadtrying.pdpquizprojectbackend.repo.TempUserRepository;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.UserRepository;
 
 import java.security.SecureRandom;
-import java.util.*;
+import java.util.List;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor

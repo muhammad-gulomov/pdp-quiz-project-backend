@@ -18,8 +18,7 @@ public class ModuleController {
 
     @GetMapping
     public ResponseEntity<List<Module>> getAllModules() {
-        List<Module> modules = moduleService.findAll();
-        return ResponseEntity.ok(modules);
+        return ResponseEntity.ok(moduleService.findAll());
     }
 
     @DeleteMapping

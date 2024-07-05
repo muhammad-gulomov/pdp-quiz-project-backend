@@ -1,21 +1,20 @@
 package uz.muhammadtrying.pdpquizprojectbackend.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Getter
-@Setter
-@ToString
+@Data
 @Entity
-public class Category {
+@Builder
+public class AttachmentContent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Integer id;
-    private String name;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Attachment attachment;
 }

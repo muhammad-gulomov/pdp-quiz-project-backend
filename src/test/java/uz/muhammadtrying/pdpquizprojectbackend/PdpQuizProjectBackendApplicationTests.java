@@ -9,5 +9,4 @@ class PdpQuizProjectBackendApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }
