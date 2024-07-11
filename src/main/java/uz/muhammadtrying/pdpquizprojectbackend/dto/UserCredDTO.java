@@ -11,5 +11,5 @@ public class UserCredDTO {
     private String firstName;
     private String lastName;
     private String password;
-    private byte[] photo;
+    private String photo;
 }

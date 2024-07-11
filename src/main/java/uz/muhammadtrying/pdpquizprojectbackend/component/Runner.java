@@ -45,7 +45,7 @@ public class Runner implements CommandLineRunner {
 
         generateUsers();
 
-        Category category1 = Category.builder().name("Java").photo("https://static-00.iconduck.com/assets.00/flutter-icon-2048x2048-ufx4idi8.png").build();
+        Category category1 = Category.builder().name("Java").build();
         Category category2 = Category.builder().name("Python").build();
 
         categoryService.save(category1);

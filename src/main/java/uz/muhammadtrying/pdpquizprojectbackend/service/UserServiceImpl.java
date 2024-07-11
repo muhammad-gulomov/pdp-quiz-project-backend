@@ -11,13 +11,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.UserCredDTO;
 import uz.muhammadtrying.pdpquizprojectbackend.dto.UserDTO;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.Attachment;
+import uz.muhammadtrying.pdpquizprojectbackend.entity.AttachmentContent;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.TempUser;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.User;
 import uz.muhammadtrying.pdpquizprojectbackend.interfaces.UserService;
+import uz.muhammadtrying.pdpquizprojectbackend.repo.AttachmentContentRepository;
+import uz.muhammadtrying.pdpquizprojectbackend.repo.AttachmentRepository;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.TempUserRepository;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.UserRepository;
 
 import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.List;
 import java.util.Random;
 
@@ -28,9 +33,10 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final TempUserRepository tempUserRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AttachmentRepository attachmentRepository;
+    private final AttachmentContentRepository attachmentContentRepository;
     @Value("${spring.mail.username}")
     private String from;
-
 
     @Override
     @Async
@@ -113,8 +119,21 @@ public class UserServiceImpl implements UserService {
             currentUser.setPassword(userCredDTO.getPassword());
         }
         if (userCredDTO.getPhoto() != null) {
-            currentUser.setPhoto(userCredDTO.getPhoto());
+            currentUser.setPhoto(saveImage(userCredDTO.getPhoto()));
         }
+    }
+
+    private Attachment saveImage(String photo) {
+        Attachment attachment = Attachment.builder()
+                .build();
+        attachmentRepository.save(attachment);
+
+        AttachmentContent attachmentContent = AttachmentContent.builder()
+                .attachment(attachment)
+                .content(Base64.getDecoder().decode(photo))
+                .build();
+        attachmentContentRepository.save(attachmentContent);
+        return attachment;
     }
 
     @Override

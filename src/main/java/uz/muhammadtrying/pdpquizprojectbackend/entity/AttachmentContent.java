@@ -17,4 +17,5 @@ public class AttachmentContent {
     private Integer id;
     @OneToOne(cascade = CascadeType.ALL)
     private Attachment attachment;
+    private byte[] content;
 }

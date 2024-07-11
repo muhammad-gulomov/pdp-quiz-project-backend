@@ -45,9 +45,9 @@ public class LeaderboardController {
             int score = attemptService.calculateTotalScoreByUserAndCategory(user, category);
 
             LeaderboardDTO dto = new LeaderboardDTO(
-                    new CategoryDTO(category.getId(), category.getName(), category.getPhoto()),
+                    new CategoryDTO(category.getId(), category.getName(), category.getAttachment().getId()),
                     rank++,
-                    user.getPhoto(),
+                    user.getPhoto().getId(),
                     user.getFirstName() + " " + user.getLastName(),
                     score
             );

@@ -12,7 +12,7 @@ import java.util.Map;
 public class CategoryStatDTO {
     private Integer id;
     private String name;
-    private Integer attachmentId;
+    private Integer categoryPhotoId;
 
     private Integer modulesFinished;
 
