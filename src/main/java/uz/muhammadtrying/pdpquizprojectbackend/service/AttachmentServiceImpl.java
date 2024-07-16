@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.Attachment;
 import uz.muhammadtrying.pdpquizprojectbackend.entity.AttachmentContent;
+import uz.muhammadtrying.pdpquizprojectbackend.interfaces.AttachmentService;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.AttachmentContentRepository;
 import uz.muhammadtrying.pdpquizprojectbackend.repo.AttachmentRepository;
 
