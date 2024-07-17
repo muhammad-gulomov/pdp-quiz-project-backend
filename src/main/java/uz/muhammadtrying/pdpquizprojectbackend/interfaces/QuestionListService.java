@@ -7,7 +7,7 @@ import java.util.Optional;
 
 @Service
 public interface QuestionListService {
-    void save(QuestionList questionList);
+    QuestionList save(QuestionList questionList);
 
     Optional<QuestionList> findById(Integer questionListId);
 }

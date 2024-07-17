@@ -7,7 +7,7 @@ import java.util.Optional;
 
 @Service
 public interface OptionService {
-    void save(Option option);
+    Option save(Option option);
 
     Optional<Option> findById(Integer id);
 }

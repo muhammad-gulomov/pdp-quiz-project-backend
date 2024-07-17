@@ -11,5 +11,5 @@ public interface AnswerService {
 
     Optional<Answer> findByChosenOption(Option chosenOption);
 
-    void save(Answer answer);
+    Answer save(Answer answer);
 }

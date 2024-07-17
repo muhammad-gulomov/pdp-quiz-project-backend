@@ -40,8 +40,8 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
-    public void save(Module module) {
-        moduleRepository.save(module);
+    public Module save(Module module) {
+        return moduleRepository.save(module);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class ModuleServiceImpl implements ModuleService {
         return ResponseEntity.ok().body(result);
     }
 
-    private List<Attempt> fetchAttempts(List<Module> modules) {
+    List<Attempt> fetchAttempts(List<Module> modules) {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Integer> questionListIds = modules.stream()
                 .flatMap(module -> module.getQuestionLists().stream())

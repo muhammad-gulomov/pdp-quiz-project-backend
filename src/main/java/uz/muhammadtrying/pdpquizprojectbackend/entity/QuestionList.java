@@ -25,4 +25,6 @@ public class QuestionList {
     private DifficultyEnum difficulty;
     @OneToMany(mappedBy = "questionList", fetch = FetchType.EAGER)
     private List<Question> questions;
+
+
 }

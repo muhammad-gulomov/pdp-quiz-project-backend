@@ -23,4 +23,10 @@ public class Option {
     @ManyToOne
     @JsonIgnore
     private Question question;
+
+    public Option(String optionContent, Boolean isCorrect, Question question) {
+        this.optionContent = optionContent;
+        this.isCorrect = isCorrect;
+        this.question = question;
+    }
 }

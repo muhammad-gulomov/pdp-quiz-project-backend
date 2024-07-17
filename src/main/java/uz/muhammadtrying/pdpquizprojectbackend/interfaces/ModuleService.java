@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Service
 public interface ModuleService {
-    void save(Module module);
+    Module save(Module module);
 
     ResponseEntity<?> getAllByCategoryAndQLdifficulty(Integer categoryId, String difficulty);
 

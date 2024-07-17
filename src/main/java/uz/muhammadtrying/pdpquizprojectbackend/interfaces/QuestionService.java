@@ -5,5 +5,5 @@ import uz.muhammadtrying.pdpquizprojectbackend.entity.Question;
 
 @Service
 public interface QuestionService {
-    void save(Question question);
+    Question save(Question question);
 }

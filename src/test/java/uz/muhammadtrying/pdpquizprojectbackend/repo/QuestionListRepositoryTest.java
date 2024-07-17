@@ -48,18 +48,22 @@ class QuestionListRepositoryTest {
         questionListRepository.save(questionList);
 
         List<QuestionList> questionLists = questionListRepository.findAllByModuleAndDifficulty(module, DifficultyEnum.EASY);
-        assertTrue(questionLists.size() > 0);
+        assertFalse(questionLists.isEmpty());
     }
 
     @Test
     void findAllByModule() {
-        Module module = Module.builder().name("Physics").build();
+        Module module = Module.builder().name("Test Module").build();
         moduleRepository.save(module);
 
-        QuestionList questionList = QuestionList.builder().name("Sample Questions").module(module).difficulty(DifficultyEnum.EASY).build();
-        questionListRepository.save(questionList);
+        QuestionList questionList1 = QuestionList.builder().name("Test question list 1").module(module).build();
+        QuestionList questionList2 = QuestionList.builder().name("Test question list 2").module(module).build();
 
-        List<QuestionList> questionLists = questionListRepository.findAllByModule(module);
-        assertTrue(questionLists.size() > 0);
+        questionListRepository.save(questionList1);
+        questionListRepository.save(questionList2);
+
+        List<QuestionList> res = questionListRepository.findAllByModule(module);
+
+        assertEquals(res.size(), 2);
     }
 }

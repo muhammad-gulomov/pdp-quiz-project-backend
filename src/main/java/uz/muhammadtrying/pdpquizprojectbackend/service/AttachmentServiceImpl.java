@@ -17,10 +17,15 @@ public class AttachmentServiceImpl implements AttachmentService {
     private final AttachmentContentRepository attachmentContentRepository;
     private final AttachmentRepository attachmentRepository;
 
+
     @Override
     public Optional<AttachmentContent> getPhotoById(Integer attachmentId) {
-        Attachment attachment = attachmentRepository.findById(attachmentId).get();
+        Optional<Attachment> attachmentOptional = attachmentRepository.findById(attachmentId);
+        if (attachmentOptional.isEmpty()) {
+            return Optional.empty();
+        }
+        Attachment attachment = attachmentOptional.get();
         AttachmentContent attachmentContent = attachmentContentRepository.findByAttachment(attachment);
-        return Optional.of(attachmentContent);
+        return Optional.ofNullable(attachmentContent);
     }
 }

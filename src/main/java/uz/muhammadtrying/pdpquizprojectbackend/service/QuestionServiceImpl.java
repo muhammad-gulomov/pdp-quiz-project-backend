@@ -12,7 +12,7 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
 
     @Override
-    public void save(Question question) {
-        questionRepository.save(question);
+    public Question save(Question question) {
+        return questionRepository.save(question);
     }
 }

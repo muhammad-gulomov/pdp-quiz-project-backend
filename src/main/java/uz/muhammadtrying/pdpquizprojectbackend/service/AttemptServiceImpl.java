@@ -85,7 +85,7 @@ public class AttemptServiceImpl implements AttemptService {
     }
 
 
-    private ResultDTO formResultDTO(QuestionList questionList, List<Answer> answers) {
+    ResultDTO formResultDTO(QuestionList questionList, List<Answer> answers) {
         ResultDTO resultDTO = new ResultDTO();
         resultDTO.setQuestionListId(questionList.getId());
 
@@ -147,7 +147,7 @@ public class AttemptServiceImpl implements AttemptService {
         return score;
     }
 
-    private void saveAnswers(List<Answer> answers) {
+    void saveAnswers(List<Answer> answers) {
         for (Answer answer : answers) {
             Optional<Answer> existingAnswerOptional = answerService.findByChosenOption(answer.getChosenOption());
             if (existingAnswerOptional.isPresent()) {

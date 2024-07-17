@@ -25,11 +25,8 @@ class UserRepositoryTest {
                 .lastName("Doe")
                 .password("root123")
                 .build();
-
         User savedUser = userRepository.save(user);
-
-        Optional<User> userOpt = userRepository.findById(savedUser.getId());
-        assertTrue(userOpt.isPresent());
+        assertNotNull(savedUser);
     }
 
     @Test

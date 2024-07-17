@@ -16,8 +16,8 @@ public class QuestionListServiceImpl implements QuestionListService {
     private final QuestionListRepository questionListRepository;
 
     @Override
-    public void save(QuestionList questionList) {
-        questionListRepository.save(questionList);
+    public QuestionList save(QuestionList questionList) {
+        return questionListRepository.save(questionList);
     }
 
     @Override

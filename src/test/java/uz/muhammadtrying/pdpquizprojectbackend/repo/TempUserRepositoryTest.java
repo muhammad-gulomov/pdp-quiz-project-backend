@@ -50,6 +50,6 @@ class TempUserRepositoryTest {
         tempUserRepository.save(tempUser);
 
         TempUser foundTempUser = tempUserRepository.findByEmail(tempUser.getEmail());
-        assertTrue(foundTempUser != null);
+        assertEquals(tempUser.getEmail(), foundTempUser.getEmail());
     }
 }
