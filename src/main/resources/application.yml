@@ -1,0 +1,26 @@
+server:
+    port: 80
+spring:
+    application:
+        name: pdp-quiz-project-backend
+    datasource:
+        driverClassName: org.postgresql.Driver
+        password: root123
+        url: jdbc:postgresql://localhost:5432/pdp-quiz-project
+        username: postgres
+    jpa:
+        hibernate:
+            ddl-auto: none
+    liquibase:
+        change-log: classpath:db/changelog/db.changelog-master.xml
+    mail:
+        host: smtp.gmail.com
+        password: dfbyiyzsouowjcdy
+        port: 587
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+        username: mirxabibovfozil@gmail.com
