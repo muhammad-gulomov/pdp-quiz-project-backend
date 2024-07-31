@@ -43,6 +43,4 @@ public class AttemptController {
         List<Answer> answers = attemptService.fromAttemptDTOtoEntity(attemptDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(attemptService.createAnAttempt(answers, attemptDTO.getQuestionListId()));
     }
-
-
 }
