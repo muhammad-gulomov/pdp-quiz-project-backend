@@ -123,6 +123,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public boolean checkIfEmailAlreadyExists(String email) {
+        User byEmail = userRepository.findByEmail(email);
+        return byEmail == null;
+    }
+
     private Attachment saveImage(String photo) {
         Attachment attachment = Attachment.builder()
                 .build();

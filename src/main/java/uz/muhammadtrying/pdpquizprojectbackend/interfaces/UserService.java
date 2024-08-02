@@ -27,4 +27,6 @@ public interface UserService {
     List<User> findAll();
 
     void checkIfValidAndSet(UserCredDTO userCredDTO, User currentUser);
+
+    boolean checkIfEmailAlreadyExists(String email);
 }

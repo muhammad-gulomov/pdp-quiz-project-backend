@@ -47,9 +47,13 @@ public class AuthController {
 
     @PostMapping("/signup")
     public void getInfoAndSendCode(@RequestBody UserDTO userDTO) {
-        String code = userService.codeGenerator();
-        userService.sendEmail(userDTO.getEmail(), code);
-        userService.addDataToTempDB(userDTO, code);
+        if (userService.checkIfEmailAlreadyExists(userDTO.getEmail())) {
+            String code = userService.codeGenerator();
+            userService.sendEmail(userDTO.getEmail(), code);
+            userService.addDataToTempDB(userDTO, code);
+            return;
+        }
+        throw new RuntimeException("such email already exists");
     }
 
     @PostMapping("/verify")
